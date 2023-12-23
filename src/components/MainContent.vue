@@ -1,35 +1,24 @@
 <script lang="ts">
 import IngredientsSelection from './IngredientsSelection.vue';
+import MyList from './MyList.vue';
+
 
 export default {
     data() {
         return {
-            ingredients: []
-        }
+            ingredients: [] as string[]
+        };
     },
-    components: { IngredientsSelection }
+    created() {
+        this.ingredients = ['Alho'];
+    },
+    components: { IngredientsSelection, MyList }
 }
 </script>
 
 <template>
     <main class="conteudo-principal">
-        <section>
-            <span class="subtitulo-lg sua-lista-texto">
-                Sua Lista
-            </span>
-
-            <ul v-if="ingredients.length" class="ingredientes-sua-lista">
-                <li v-for="ingredient in ingredients" :key="ingredient" class="ingrediente">
-                    {{ ingredient }}
-                </li>
-            </ul>
-
-            <!-- v-else only works immediately after v-if -->
-            <p v-else class="paragrafo lista-vazia">
-                <img src="../assets/images/icones/lista-vazia.svg" alt="Icone de pesquisa">
-                Ops, não encontramos resultados para sua combinação. Vamos tentar de novo?
-            </p>
-        </section>
+        <MyList :ingredients="ingredients" />
 
         <IngredientsSelection />
     </main>
@@ -46,43 +35,6 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 5rem;
-}
-
-.sua-lista-texto {
-    color: var(--coral, #F0633C);
-    display: block;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.ingredientes-sua-lista {
-    display: flex;
-    justify-content: center;
-    gap: 1rem 1.5rem;
-    flex-wrap: wrap;
-}
-
-.ingrediente {
-    display: inline-block;
-    border-radius: 0.5rem;
-    min-width: 4.25rem;
-    padding: 0.5rem;
-    text-align: center;
-    transition: 0.2s;
-    color: var(--creme, #FFFAF3);
-    background: var(--coral, #F0633C);
-    font-weight: 700;
-}
-
-.lista-vazia {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-
-    color: var(--coral, #F0633C);
-    text-align: center;
 }
 
 @media only screen and (max-width: 1300px) {
