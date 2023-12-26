@@ -1,18 +1,17 @@
-<script lang="ts">
+<!-- setup is here -->
+<script setup lang="ts">
+import { ref } from 'vue';
 import IngredientsSelection from './IngredientsSelection.vue';
 import MyList from './MyList.vue';
 
+const ingredients = ref<string[]>([]);
 
-export default {
-    data() {
-        return {
-            ingredients: [] as string[]
-        };
-    },
-    created() {
-        this.ingredients = ['Alho'];
-    },
-    components: { IngredientsSelection, MyList }
+function addIngredients(ingredient: string) {
+    ingredients.value.push(ingredient);
+}
+
+function removeIngredients(ingredient: string) {
+    ingredients.value = ingredients.value.filter(item => item != ingredient);
 }
 </script>
 
@@ -20,7 +19,7 @@ export default {
     <main class="conteudo-principal">
         <MyList :ingredients="ingredients" />
 
-        <IngredientsSelection />
+        <IngredientsSelection @add-ingredient="addIngredients" @remove-ingredient="removeIngredients" />
     </main>
 </template>
 

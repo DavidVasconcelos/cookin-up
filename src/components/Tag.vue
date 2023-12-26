@@ -1,15 +1,15 @@
-<script lang="ts">
-export default {
-    props: {
-        text: { type: String, required: true },
-        active: Boolean
-    }
-}
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const props = defineProps<{
+    text: String,
+    active: Boolean
+}>()
 </script>
 
 <template>
     <!-- class="tag" :class="{ active: active } works as the same -->
-    <span :class="['tag', { active }]">
+    <span :class="['tag', { active: props.active }]">
         {{ text }}
     </span>
 </template>

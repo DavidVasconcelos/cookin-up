@@ -1,19 +1,33 @@
-<script lang="ts">
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { getCategories } from '@/http/index';
 import type ICategory from '../interfaces/ICategory';
 import CategoryCard from "./CategoryCard.vue";
+import MainButton from './MainButton.vue';
 
-export default {
-    data() {
-        return {
-            categories: [] as ICategory[]
-        }
-    },
-    async created() {
-        this.categories = await getCategories();
-    },
-    components: { CategoryCard }
+
+const categories = ref<ICategory[]>([]);
+
+
+const bindCategories = async () => {
+
+    categories.value = await getCategories();
 }
+
+const emit = defineEmits<{
+    (e: 'addIngredient', ingredient: string): void
+    (e: 'removeIngredient', ingredient: string): void
+}>()
+
+function addIngredient(ingredient: string) {
+    emit('addIngredient', ingredient);
+}
+
+function removeIngredient(ingredient: string) {
+    emit('removeIngredient', ingredient);
+}
+
+onMounted(bindCategories);
 </script>
 
 <template>
@@ -26,13 +40,14 @@ export default {
 
         <ul class="categorias">
             <li v-for="category in categories" :key="category.name">
-                <CategoryCard :category="category" />
+                <CategoryCard :category="category" @add-ingredient="addIngredient" @remove-ingredient="removeIngredient" />
             </li>
         </ul>
 
         <p class="paragrafo dica">
             *Atenção: consideramos que você tem em casa sal, pimenta e água.
         </p>
+        <MainButton text="Buscar receitas!" />
     </section>
 </template>
 
