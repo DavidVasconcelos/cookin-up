@@ -27,7 +27,7 @@ function whenClicking(event: string) {
 
 <template>
     <!-- v-on:click="selected works as the same -->
-    <button class="ingrediente" @click="whenClicking(ingredient)" :aria-pressed="selected">
+    <button class="ingrediente" @click="whenClicking(ingredient)" :area-pressed="selected">
         <Tag :text="ingredient" :active="selected" />
     </button>
 </template>

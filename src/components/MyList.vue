@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import Tag from './Tag.vue';
 
 const props = defineProps<{
-    ingredients: String[]
+    ingredients: string[]
 }>()
 </script>
 
@@ -14,7 +14,7 @@ const props = defineProps<{
         </span>
 
         <ul v-if="ingredients.length" class="ingredientes-sua-lista">
-            <li v-for="ingredient in   ingredients  " :key="ingredient" class="ingrediente">
+            <li v-for="ingredient in ingredients" :key="ingredient" class="ingrediente">
                 <Tag :text="ingredient" :active="true" />
             </li>
         </ul>
