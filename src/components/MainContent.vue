@@ -3,8 +3,12 @@
 import { ref } from 'vue';
 import IngredientsSelection from './IngredientsSelection.vue';
 import MyList from './MyList.vue';
+import ShowRecipes from './ShowRecipes.vue';
+
+type Page = 'IngredientsSelection' | 'ShowRecipes';
 
 const ingredients = ref<string[]>([]);
+const content = ref<Page>('IngredientsSelection');
 
 function addIngredients(ingredient: string) {
     ingredients.value.push(ingredient);
@@ -13,13 +17,20 @@ function addIngredients(ingredient: string) {
 function removeIngredients(ingredient: string) {
     ingredients.value = ingredients.value.filter(item => item != ingredient);
 }
+
+function navigate(page: Page) {
+    content.value = page;
+}
 </script>
 
 <template>
     <main class="conteudo-principal">
         <MyList :ingredients="ingredients" />
 
-        <IngredientsSelection @add-ingredient="addIngredients" @remove-ingredient="removeIngredients" />
+        <IngredientsSelection v-if="content === 'IngredientsSelection'" @add-ingredient="addIngredients"
+            @remove-ingredient="removeIngredients" @get-recipes="navigate('ShowRecipes')" />
+
+        <ShowRecipes v-else-if="content === 'ShowRecipes'" />
     </main>
 </template>
 

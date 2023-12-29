@@ -17,6 +17,7 @@ const bindCategories = async () => {
 const emit = defineEmits<{
     (e: 'addIngredient', ingredient: string): void
     (e: 'removeIngredient', ingredient: string): void
+    (e: 'getRecipes'): void
 }>()
 
 function addIngredient(ingredient: string) {
@@ -25,6 +26,10 @@ function addIngredient(ingredient: string) {
 
 function removeIngredient(ingredient: string) {
     emit('removeIngredient', ingredient);
+}
+
+function getRecipes() {
+    emit('getRecipes');
 }
 
 onMounted(bindCategories);
@@ -47,7 +52,7 @@ onMounted(bindCategories);
         <p class="paragrafo dica">
             *Atenção: consideramos que você tem em casa sal, pimenta e água.
         </p>
-        <MainButton text="Buscar receitas!" />
+        <MainButton text="Buscar receitas!" @click="getRecipes" />
     </section>
 </template>
 
