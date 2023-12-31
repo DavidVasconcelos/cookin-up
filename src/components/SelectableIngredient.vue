@@ -15,7 +15,6 @@ const emit = defineEmits<{
 
 function whenClicking(event: string) {
     selected.value = !selected.value
-    console.log(selected.value);
 
     if (selected.value) {
         emit('addIngredient', event)
