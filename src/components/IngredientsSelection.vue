@@ -5,6 +5,8 @@ import type ICategory from '../interfaces/ICategory';
 import CategoryCard from "./CategoryCard.vue";
 import MainButton from './MainButton.vue';
 
+// To keep alive find this component
+const name = 'IngredientsSelection';
 
 const categories = ref<ICategory[]>([]);
 

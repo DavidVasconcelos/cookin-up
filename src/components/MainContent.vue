@@ -27,10 +27,12 @@ function navigate(page: Page) {
     <main class="conteudo-principal">
         <MyList :ingredients="ingredients" />
 
-        <IngredientsSelection v-if="content === 'IngredientsSelection'" @add-ingredient="addIngredients"
-            @remove-ingredient="removeIngredients" @get-recipes="navigate('ShowRecipes')" />
+        <KeepAlive include="IngredientsSelection">
+            <IngredientsSelection v-if="content === 'IngredientsSelection'" @add-ingredient="addIngredients"
+                @remove-ingredient="removeIngredients" @get-recipes="navigate('ShowRecipes')" />
 
-        <ShowRecipes v-else-if="content === 'ShowRecipes'" @edit-recipes="navigate('IngredientsSelection')" />
+            <ShowRecipes v-else-if="content === 'ShowRecipes'" @edit-recipes="navigate('IngredientsSelection')" />
+        </KeepAlive>
     </main>
 </template>
 
