@@ -1,16 +1,24 @@
 <script setup lang="ts">
+import { allElementsExist } from "@/operations/lists";
 import { getRecipes } from '@/http';
 import type IRecipe from '@/interfaces/IRecipe';
 import { onMounted, ref } from 'vue';
 import RecipeCard from './RecipeCard.vue';
 import MainButton from './MainButton.vue';
 
-const recipes = ref<IRecipe[]>([]);
-
+const recipesFound = ref<IRecipe[]>([]);
+const props = defineProps<{
+    ingredients: string[]
+}>()
 
 const bindRecipes = async () => {
+    const recipes = await getRecipes();
 
-    recipes.value = (await getRecipes()).slice(0, 8);
+    recipesFound.value = recipes.filter((recipe) => {
+        const canIMakeRecipe = allElementsExist(recipe.ingredients, props.ingredients);
+
+        return canIMakeRecipe;
+    });
 }
 
 const emit = defineEmits<{
@@ -29,16 +37,16 @@ onMounted(bindRecipes);
         <h1 class="cabecalho titulo-receitas">Receitas</h1>
 
         <p class="paragrafo-lg resultados-encontrados">
-            Resultados encontrados: {{ recipes.length }}
+            Resultados encontrados: {{ recipesFound.length }}
         </p>
 
-        <div v-if="recipes.length" class="receitas-wrapper">
+        <div v-if="recipesFound.length" class="receitas-wrapper">
             <p class="paragrafo-lg informacoes">
                 Veja as opções de receitas que encontramos com os ingredientes que você tem por aí!
             </p>
 
             <ul class="receitas">
-                <li v-for="recipe of recipes" :key="recipe.name">
+                <li v-for="recipe of recipesFound" :key="recipe.name">
                     <RecipeCard :recipe="recipe" />
                 </li>
             </ul>

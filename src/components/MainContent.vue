@@ -31,7 +31,8 @@ function navigate(page: Page) {
             <IngredientsSelection v-if="content === 'IngredientsSelection'" @add-ingredient="addIngredients"
                 @remove-ingredient="removeIngredients" @get-recipes="navigate('ShowRecipes')" />
 
-            <ShowRecipes v-else-if="content === 'ShowRecipes'" @edit-recipes="navigate('IngredientsSelection')" />
+            <ShowRecipes :ingredients="ingredients" v-else-if="content === 'ShowRecipes'"
+                @edit-recipes="navigate('IngredientsSelection')" />
         </KeepAlive>
     </main>
 </template>
